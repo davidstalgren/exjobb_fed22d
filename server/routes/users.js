@@ -3,7 +3,8 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  console.log('get user route was invoked');
+  res.send('route is working, GPN is coming along!');
 });
 
 module.exports = router;

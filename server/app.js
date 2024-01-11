@@ -10,6 +10,7 @@ const User = require('./models/User');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var loginRouter = require('./routes/login');
 
 dotenv.config();
 var app = express();
@@ -31,7 +32,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage })
 
-app.post('/auth/register', upload.single('pictureFile'), async (req, res) => {
+app.post('/register', upload.single('pictureFile'), async (req, res) => {
   try {
     const {firstName, lastName, email, password, pictureUrl, location} = req.body;
     const salt = await bcrypt.genSalt();
@@ -48,6 +49,7 @@ app.post('/auth/register', upload.single('pictureFile'), async (req, res) => {
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/login', loginRouter);
 
 async function init() {
   try {

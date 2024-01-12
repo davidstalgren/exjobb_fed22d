@@ -6,7 +6,7 @@ const { verifyToken } = require('../middleware/verifyToken');
 
 router.get('/:id', verifyToken, async(req, res) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).select('-password');
     if(user) {
       res.status(200).json(user)
     } else {

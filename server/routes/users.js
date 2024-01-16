@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const { verifyToken } = require('../middleware/verifyToken');
 
+/* -------------------------------
+-------------Get User-------------
+------------------------------- */
 router.get('/:id', verifyToken, async(req, res) => {
   try {
     const user = await User.findById(req.params.id).select('-password');
@@ -18,6 +21,9 @@ router.get('/:id', verifyToken, async(req, res) => {
   }
 });
 
+/* -------------------------------
+-------Get User Friendslist-------
+------------------------------- */
 router.get('/:id/friends', verifyToken, async(req, res) => {
   try {
     const user = await User.findById(req.params.id);

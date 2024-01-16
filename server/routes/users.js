@@ -23,14 +23,10 @@ router.get('/:id/friends', verifyToken, async(req, res) => {
     const user = await User.findById(req.params.id);
     console.log(user);
     if(user) {
-      const friendsListFull = await Promise.all(
-        user.friends.map((id) => User.findById(id))
+      const friendsList = await Promise.all(
+        user.friends.map((id) => User.findById(id).select('_id firstName lastName location pictureUrl'))
       );
-
-      const friendsListMinified = friendsListFull.map(({_id, firstName, lastName, location, pictureUrl}) => {
-        return {_id, firstName, lastName, location, pictureUrl}
-      });
-      res.status(200).json(friendsListMinified);
+      res.status(200).json(friendsList);
     } else {
       res.status(404).json({ error: 'User not found' });
     }
@@ -39,7 +35,5 @@ router.get('/:id/friends', verifyToken, async(req, res) => {
     res.status(400).json({ error: 'Something went wrong' });
   }
 })
-
-
 
 module.exports = router;

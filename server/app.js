@@ -11,6 +11,7 @@ const User = require('./models/User');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
+var postsRouter = require('./routes/posts');
 
 dotenv.config();
 var app = express();
@@ -55,6 +56,7 @@ app.post('/register', upload.single('pictureFile'), async (req, res) => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
+app.use('/posts', postsRouter);
 
 async function init() {
   try {

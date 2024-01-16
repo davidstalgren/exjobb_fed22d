@@ -37,7 +37,12 @@ app.post('/register', upload.single('pictureFile'), async (req, res) => {
     const {firstName, lastName, email, password, pictureUrl, location} = req.body;
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
-    const newUserToAdd = new User({firstName, lastName, email, "password": hashedPassword, pictureUrl, location});
+    /* const friends = [
+      '65a0f73f8e3d4e2b52f0732e',
+      '65a00a09b638a4ba32bd6a6d',
+      '659fd28b456ee57e578f94a1'
+    ] */
+    const newUserToAdd = new User({firstName, lastName, email, "password": hashedPassword, pictureUrl, location, /* friends */});
     await newUserToAdd.save();
     console.log(newUserToAdd, `added a new user to DB`);
     res.status(201).json(newUserToAdd);

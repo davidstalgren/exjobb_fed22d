@@ -2,26 +2,72 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const { verifyToken } = require('../middleware/verifyToken');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  console.log('get user route was invoked');
-  res.send('route is working, GPN is coming along!');
-});
-
-router.post('/addUser', async(req, res) => {
+/* -------------------------------
+-------------Get User-------------
+------------------------------- */
+router.get('/:id', verifyToken, async(req, res) => {
   try {
-    const {firstName, lastName, email, password} = req.body;
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const newUserToAdd = new User({firstName, lastName, email, "password": hashedPassword});
-    await newUserToAdd.save();
-    console.log(newUserToAdd, `added a new user to DB`);
-    res.status(201).json(newUserToAdd);
+    const user = await User.findById(req.params.id).select('-password');
+    if(user) {
+      res.status(200).json(user)
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
   } catch(error) {
     console.log(error);
     res.status(400).json({ error: 'Something went wrong' });
   }
-})
+});
+
+/* -------------------------------
+-------Get User Friendslist-------
+------------------------------- */
+router.get('/:id/friends', verifyToken, async(req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    console.log(user);
+    if(user) {
+      const friendsList = await Promise.all(
+        user.friends.map((id) => User.findById(id).select('_id firstName lastName location pictureUrl'))
+      );
+      res.status(200).json(friendsList);
+    } else {
+      res.status(404).json({ error: 'User not found' });
+    }
+  } catch(error) {
+    console.log(error);
+    res.status(400).json({ error: 'Something went wrong' });
+  }
+});
+
+/* -------------------------------
+-------Add or Remove Friend-------
+------------------------------- */
+router.put('/:id/:friendId', verifyToken, async(req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const friend = await User.findById(req.params.friendId);
+
+    if (user.friends.includes(req.params.friendId)) {
+      user.friends = user.friends.filter((id) => id !== req.params.friendId);
+      friend.friends = friend.friends.filter((id) => id !== req.params.id);
+    } else {
+      user.friends.push(req.params.friendId);
+      friend.friends.push(req.params.id);
+    }
+    await user.save();
+    await friend.save();
+
+    const updatedFriendsList = await Promise.all(
+      user.friends.map((id) => User.findById(id).select('_id firstName lastName location pictureUrl'))
+    );
+    res.status(200).json(updatedFriendsList)
+  } catch(error) {
+    console.log(error);
+    res.status(400).json({ error: 'Something went wrong' });
+  }
+});
 
 module.exports = router;

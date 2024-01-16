@@ -7,6 +7,8 @@ const dotenv = require('dotenv');
 const multer = require('multer');
 const bcrypt = require('bcrypt');
 const User = require('./models/User');
+const Post = require('./models/Post');
+const { verifyToken } = require('./middleware/verifyToken');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -22,6 +24,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
+/* -------------------------------
+--------Multer diskstorage--------
+------------------------------- */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/assets');
@@ -33,6 +38,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage })
 
+/* -------------------------------
+--Register a new user with photo--
+------------------------------- */
 app.post('/register', upload.single('pictureFile'), async (req, res) => {
   try {
     const {firstName, lastName, email, password, pictureUrl, location} = req.body;
@@ -51,7 +59,36 @@ app.post('/register', upload.single('pictureFile'), async (req, res) => {
     console.log(error);
     res.status(400).json({ error: 'Something went wrong' });
   }
-})
+});
+
+/* -------------------------------
+---Create a new Post with photo---
+------------------------------- */
+app.post('/posts', verifyToken, upload.single('pictureFile'), async (req, res) => {
+  try {
+    const { userId, content, contentPictureUrl } = req.body;
+    const user = await User.findById(userId);
+    const post = new Post({
+      userId, 
+      firstName: user.firstName, 
+      lastName: user.lastName, 
+      location: user.location, 
+      userPictureUrl: user.pictureUrl, 
+      content, 
+      contentPictureUrl, 
+      likes: {}, 
+      comments: []
+    });
+
+    await post.save();
+
+    const newFeed = await Post.find();
+    res.status(201).json(newFeed);
+  } catch(error) {
+    console.log(error);
+    res.status(400).json({ error: 'Something went wrong' });
+  }
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

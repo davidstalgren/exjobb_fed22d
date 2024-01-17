@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const Post = require('../models/Post');
 const { verifyToken } = require('../middleware/verifyToken');
+const User = require('../models/User');
 
 /* -------------------------------
 ---------Get all Posts------------
@@ -42,6 +43,33 @@ router.put('/:postId/like', verifyToken, async(req, res) => {
     } else {
       post.likes.set(req.body.userId, true);
     }
+    await post.save();
+    const newPostStatus = await Post.findById(req.params.postId);
+    res.status(200).json(newPostStatus);
+
+  } catch(error) {
+    console.log(error);
+    res.status(400).json({ error: 'Something went wrong' });
+  }
+});
+
+/* -------------------------------
+------------Add Comment-----------
+------------------------------- */
+router.put('/:postId/comment/add', verifyToken, async(req, res) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    const user = await User.findById(req.body.userId);
+
+    //post.comments.pop();
+    post.comments.push({
+      userId: req.body.userId,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      pictureUrl: user.pictureUrl,
+      comment: req.body.commentToAdd
+    });
+
     await post.save();
     const newPostStatus = await Post.findById(req.params.postId);
     res.status(200).json(newPostStatus);

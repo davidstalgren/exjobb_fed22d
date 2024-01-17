@@ -16,4 +16,19 @@ router.get('/', verifyToken, async(req, res) => {
   }
 });
 
+/* -------------------------------
+---------Get User Posts------------
+------------------------------- */
+router.get('/:userId', verifyToken, async(req, res) => {
+  try {
+    const posts = await Post.find({ userId: req.params.userId });
+    res.status(200).json(posts);
+  } catch(error) {
+    console.log(error);
+    res.status(400).json({ error: 'Something went wrong' });
+  }
+});
+
+
+
 module.exports = router;

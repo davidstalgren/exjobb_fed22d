@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const multer = require('multer');
@@ -17,6 +18,7 @@ var postsRouter = require('./routes/posts');
 
 dotenv.config();
 var app = express();
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json({ limit: '30mb', extended: true }));
 app.use(express.urlencoded({ limit: '30mb', extended: true }));

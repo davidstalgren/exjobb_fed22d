@@ -81,7 +81,7 @@ export function themeSettings(mode) {
       fontFamily: ["Rubik", "Montserrat", "Roboto", "sans-serif"].join(","),
       fontSize: 16,
       h1: {
-        fontFamily: ["Rubik", "Montserrat", "Roboto", "sans-serif"].join(","),
+        fontFamily: ["Montserrat", "Rubik", "Roboto", "sans-serif"].join(","),
         fontSize: 40
       },
       h2: {

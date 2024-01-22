@@ -1,13 +1,11 @@
 import {object, string} from 'yup';
 import { Formik } from 'formik';
 import { useState } from 'react';
-import { Box, TextField, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Button, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Dropzone from "react-dropzone";
-import { BoxSpaced } from './styled/StyledBox';
-import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
-import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import { RegisterUserForm } from './RegisterUserForm';
+import { LoginUserForm } from './LoginUserForm';
 
 const registerUserSchema = object({
   firstName: string().min(2, 'Too Short!').max(30, 'Too Long!').required('First name is required'),
@@ -39,7 +37,6 @@ export function LoginRegForm() {
 
   }
 
-  console.log(imagePreview);
   return (
     <Formik 
       onSubmit={handleFormSubmit} 
@@ -53,40 +50,19 @@ export function LoginRegForm() {
         {({values, errors, touched, handleBlur, handleChange, handleSubmit, setFieldValue, resetForm}) => (
           <form onSubmit={handleSubmit}>
             <Box display='grid' gap='2rem' gridTemplateColumns='repeat(2, minmax(0, 1fr))' sx={{'& > div': {gridColumn: isDesktop ? undefined : 'span 2'}}}>
-              {activeView === 'register' && (
-                <>
-                  <TextField label='First Name' onBlur={handleBlur} onChange={handleChange} value={values.firstName} name='firstName' error={Boolean(touched.firstName) && Boolean(errors.firstName)} helperText={touched.firstName && errors.firstName} sx={{gridColumn: 'span 1'}}></TextField>
-                  <TextField label='Last Name' onBlur={handleBlur} onChange={handleChange} value={values.lastName} name='lastName' error={Boolean(touched.lastName) && Boolean(errors.lastName)} helperText={touched.lastName && errors.lastName} sx={{gridColumn: 'span 1'}}></TextField>
-                  <TextField label='Location' onBlur={handleBlur} onChange={handleChange} value={values.location} name='location' error={Boolean(touched.location) && Boolean(errors.location)} helperText={touched.location && errors.location} sx={{gridColumn: 'span 2'}}></TextField>
-                  <Box sx={{gridColumn: 'span 2'}}>
-                    <Dropzone multiple={false} onDrop={(acceptedFiles) => {
-                        setFieldValue("picture", acceptedFiles[0]);
-                        setImagePreview(URL.createObjectURL(acceptedFiles[0]));
-                      }}>
-                      {({ getRootProps, getInputProps }) => (
-                        <Box {...getRootProps()} border={`1px dotted ${theme.palette.neutral.medium}`} padding='1rem' borderRadius='0.25rem' sx={{ '&:hover': { cursor: 'pointer' } }}>
-                          <input {...getInputProps()} />
-                          {!values.picture ? (
-                            <BoxSpaced gap='2rem'>
-                              <Typography>Add your profile picture here, click or drag and drop</Typography>
-                              <InsertPhotoIcon />
-                            </BoxSpaced>
-                          ) : (
-                            <BoxSpaced>
-                              <Box maxHeight={100} >
-                                <Box component='img' src={imagePreview} alt='Preview of chosen file' sx={{width: '100%', height: '100%', objectFit: 'contain'}} />
-                              </Box>
-                              <ModeEditIcon />
-                            </BoxSpaced>
-                          )}
-                        </Box>
-                      )}
-                    </Dropzone>
-                  </Box>
-                  <TextField label='Email' onBlur={handleBlur} onChange={handleChange} value={values.email} name='email' error={Boolean(touched.email) && Boolean(errors.email)} helperText={touched.email && errors.email} autoComplete='' sx={{gridColumn: 'span 2'}}></TextField>
-                  <TextField type='password' label='Password' onBlur={handleBlur} onChange={handleChange} value={values.password} name='password' error={Boolean(touched.password) && Boolean(errors.password)} helperText={touched.password && errors.password} sx={{gridColumn: 'span 2'}}></TextField>
-                </>
-              )}
+              {activeView === 'login' && <LoginUserForm values={values} errors={errors} touched={touched} handleBlur={handleBlur} handleChange={handleChange} ></LoginUserForm>}
+              {activeView === 'register' && <RegisterUserForm values={values} errors={errors} touched={touched} theme={theme} handleBlur={handleBlur} handleChange={handleChange} setFieldValue={setFieldValue} imagePreview={imagePreview} setImagePreview={setImagePreview}></RegisterUserForm>}
+            </Box>
+            <Box>
+              <Button type='submit' fullWidth sx={{margin: '2rem 0', padding: '1rem', backgroundColor: theme.palette.primary.main, color: theme.palette.background.alt, '&:hover': {color: theme.palette.primary.main, backgroundColor: theme.palette.primary.light}}}>
+                {activeView === 'login' ? 'Login' : 'Register'}
+              </Button>
+              <Typography onClick={() => {
+                setActiveView(activeView === 'login' ? 'register' : 'login');
+                resetForm();
+              }} sx={{textDecoration: 'underline', color: theme.palette.primary.dark, '&:hover': {cursor: 'pointer', color: theme.palette.primary.main}}}>
+                {activeView === 'login' ? 'Not yet a GreenPatch friend? Click here to sign up now!' : 'Already a GreenPatch friend? Click here to log in!'}
+              </Typography>
             </Box>
           </form>
         )}

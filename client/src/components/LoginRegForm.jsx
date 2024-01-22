@@ -33,11 +33,13 @@ export function LoginRegForm() {
   //eslint-disable-next-line
   const navigate = useNavigate();
   const isDesktop = useMediaQuery('(min-width:700px)');
+  const [imagePreview, setImagePreview] = useState('');
   
   async function handleFormSubmit(values, props) {
 
   }
 
+  console.log(imagePreview);
   return (
     <Formik 
       onSubmit={handleFormSubmit} 
@@ -57,18 +59,23 @@ export function LoginRegForm() {
                   <TextField label='Last Name' onBlur={handleBlur} onChange={handleChange} value={values.lastName} name='lastName' error={Boolean(touched.lastName) && Boolean(errors.lastName)} helperText={touched.lastName && errors.lastName} sx={{gridColumn: 'span 1'}}></TextField>
                   <TextField label='Location' onBlur={handleBlur} onChange={handleChange} value={values.location} name='location' error={Boolean(touched.location) && Boolean(errors.location)} helperText={touched.location && errors.location} sx={{gridColumn: 'span 2'}}></TextField>
                   <Box sx={{gridColumn: 'span 2'}}>
-                    <Dropzone multiple={false} onDrop={(acceptedFiles) => setFieldValue("picture", acceptedFiles[0])}>
+                    <Dropzone multiple={false} onDrop={(acceptedFiles) => {
+                        setFieldValue("picture", acceptedFiles[0]);
+                        setImagePreview(URL.createObjectURL(acceptedFiles[0]));
+                      }}>
                       {({ getRootProps, getInputProps }) => (
                         <Box {...getRootProps()} border={`1px dotted ${theme.palette.neutral.medium}`} padding='1rem' borderRadius='0.25rem' sx={{ '&:hover': { cursor: 'pointer' } }}>
                           <input {...getInputProps()} />
                           {!values.picture ? (
-                            <BoxSpaced>
+                            <BoxSpaced gap='2rem'>
                               <Typography>Add your profile picture here, click or drag and drop</Typography>
                               <InsertPhotoIcon />
                             </BoxSpaced>
                           ) : (
                             <BoxSpaced>
-                              <Typography>{values.picture.name}</Typography>
+                              <Box maxHeight={100} >
+                                <Box component='img' src={imagePreview} alt='Preview of chosen file' sx={{width: '100%', height: '100%', objectFit: 'contain'}} />
+                              </Box>
                               <ModeEditIcon />
                             </BoxSpaced>
                           )}

@@ -22,9 +22,7 @@ const loginUserSchema = object({
 });
 
 export function LoginRegForm() {
-  //eslint-disable-next-line
-  const [activeView, setActiveView] = useState('register');
-  //eslint-disable-next-line
+  const [activeView, setActiveView] = useState('login');
   const theme = useTheme();
   //eslint-disable-next-line
   const dispatch = useDispatch();
@@ -34,7 +32,29 @@ export function LoginRegForm() {
   const [imagePreview, setImagePreview] = useState('');
   
   async function handleFormSubmit(values, props) {
+    if (activeView === 'login') {
+      console.log('login user function', values);
+    } else {
+      const formData = new FormData();
+      formData.append('firstName', values.firstName);
+      formData.append('lastName', values.lastName);
+      formData.append('location', values.location);
+      formData.append('email', values.email);
+      formData.append('password', values.password);
+      formData.append('pictureFile', values.picture);
+      formData.append('pictureUrl', values.picture.name);
 
+      const registerNewUser = await fetch(`${process.env.REACT_APP_API_URL}/register`, {
+        method: 'POST',
+        body: formData
+      });
+      const newUser = await registerNewUser.json();
+
+      if (newUser) {
+        setActiveView('login');
+        props.resetForm()
+      }
+    }
   }
 
   return (

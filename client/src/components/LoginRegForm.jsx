@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RegisterUserForm } from './RegisterUserForm';
 import { LoginUserForm } from './LoginUserForm';
+import { setLogin } from '../store/reducers/reducers';
 
 const registerUserSchema = object({
   firstName: string().min(2, 'Too Short!').max(30, 'Too Long!').required('First name is required'),
@@ -24,16 +25,34 @@ const loginUserSchema = object({
 export function LoginRegForm() {
   const [activeView, setActiveView] = useState('login');
   const theme = useTheme();
-  //eslint-disable-next-line
   const dispatch = useDispatch();
-  //eslint-disable-next-line
   const navigate = useNavigate();
   const isDesktop = useMediaQuery('(min-width:700px)');
   const [imagePreview, setImagePreview] = useState('');
   
   async function handleFormSubmit(values, props) {
     if (activeView === 'login') {
-      console.log('login user function', values);
+      const loginUser = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(values)
+      });
+      const loggedInUser = await loginUser.json();
+      
+      if (!loggedInUser.token) {
+        return;
+      } else {
+        dispatch(
+          setLogin({
+            user: loggedInUser.user,
+            token: loggedInUser.token
+          })
+        )
+        props.resetForm();
+        navigate('/home');
+      }
     } else {
       const formData = new FormData();
       formData.append('firstName', values.firstName);

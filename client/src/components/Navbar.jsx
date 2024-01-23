@@ -5,11 +5,10 @@ import { useNavigate } from "react-router-dom"
 import { BoxSpaced, BoxSpacedColumn } from "./styled/StyledBox";
 import { Logo } from "./Logo";
 import IconButton from '@mui/material/IconButton';
-import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
-import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import { setLogout, setMode } from "../store/reducers/reducers";
+import { setLogout } from "../store/reducers/reducers";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -29,9 +28,7 @@ export function Navbar() {
 
       {isDesktop ? (
         <BoxSpaced gap='2rem'>
-          <IconButton onClick={() => dispatch(setMode())}>
-            {theme.palette.mode === 'light' ? <DarkModeOutlinedIcon /> : <LightModeOutlinedIcon />}
-          </IconButton>
+          <ThemeToggle></ThemeToggle>
           <BoxSpacedColumn>
             <Box component='img' src={`${process.env.REACT_APP_API_URL}/assets/${user.pictureUrl}`} alt='Preview of chosen file' width='3rem' height='3rem' borderRadius='50%' sx={{objectFit: 'cover'}}/>
             <Typography onClick={() => {
@@ -56,9 +53,7 @@ export function Navbar() {
           </IconButton>
           </BoxSpaced>
           <Divider color='primary' flexItem />
-          <IconButton onClick={() => dispatch(setMode())}>
-            {theme.palette.mode === 'light' ? <DarkModeOutlinedIcon /> : <LightModeOutlinedIcon />}
-          </IconButton>
+          <ThemeToggle></ThemeToggle>
           <Typography onClick={() => {
             dispatch(setLogout());
             navigate('/');

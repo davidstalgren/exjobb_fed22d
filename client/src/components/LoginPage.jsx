@@ -9,7 +9,7 @@ export function LoginPage() {
 
   return (
     <Box>
-      <BoxSpaced backgroundColor={theme.palette.background.alt} width='100%'>
+      <BoxSpaced padding='1rem' backgroundColor={theme.palette.background.alt}>
         {isDesktop ? <Logo width={75} /> : <Logo width={50} />}
           <Typography align="center" variant="h1" color="primary" fontWeight='900' fontSize='clamp(1rem, 2vw + 1rem, 4rem)'>
             GreenPatch Network
@@ -22,7 +22,6 @@ export function LoginPage() {
         </Typography>
         <LoginRegForm></LoginRegForm>
       </Box>
-
     </Box>
   )
 }

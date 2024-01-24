@@ -9,6 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import { setLogout } from "../store/reducers/reducers";
 import { ThemeToggle } from "./ThemeToggle";
+import { ProfileImage } from "./ProfileImage";
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ export function Navbar() {
         <BoxSpaced gap='2rem'>
           <ThemeToggle></ThemeToggle>
           <BoxSpacedColumn>
-            <Box component='img' src={`${process.env.REACT_APP_API_URL}/assets/${user.pictureUrl}`} alt='Preview of chosen file' width='3rem' height='3rem' borderRadius='50%' sx={{objectFit: 'cover'}}/>
+            <ProfileImage pictureUrl={user.pictureUrl}></ProfileImage>
             <Typography onClick={() => {
               dispatch(setLogout());
               navigate('/')
@@ -47,10 +48,10 @@ export function Navbar() {
       {mobileMenuOpen && !isDesktop && (
         <Box display='flex' flexDirection='column' justifyContent='flex-start' alignItems='center' gap='1rem' padding='1rem' position='fixed' top='0' right='0' width='200px' height='100%' backgroundColor={theme.palette.primary.light}>
           <BoxSpaced width='100%' paddingLeft='2rem'>
-          <Box component='img' src={`${process.env.REACT_APP_API_URL}/assets/${user.pictureUrl}`} alt='Preview of chosen file' width='3rem' height='3rem' borderRadius='50%' sx={{objectFit: 'cover'}}/>
-          <IconButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-            <CloseIcon></CloseIcon>
-          </IconButton>
+            <ProfileImage pictureUrl={user.pictureUrl} size="3rem"></ProfileImage>
+            <IconButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+              <CloseIcon></CloseIcon>
+            </IconButton>
           </BoxSpaced>
           <Divider color='primary' flexItem />
           <ThemeToggle></ThemeToggle>

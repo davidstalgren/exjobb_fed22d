@@ -72,7 +72,7 @@ export function themeSettings(mode) {
               light: colors.grey[50]
             },
             background: {
-              default: colors.grey[10],
+              default: colors.grey[50],
               alt: colors.grey[0]
             }
           })

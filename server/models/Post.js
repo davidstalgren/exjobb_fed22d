@@ -17,7 +17,7 @@ const PostSchema = mongoose.Schema(
       max: 30
     },
     location: String,
-    userPictrureUrl: String,
+    userPictureUrl: String,
     content: String,
     contentPictureUrl: String,
     likes: {

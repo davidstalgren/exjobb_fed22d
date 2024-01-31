@@ -29,17 +29,15 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
           </Box>
         </BoxSpaced>
         <BoxSpaced gap='1rem'>
-          <IconButton>
+          <IconButton onClick={() => { console.log(`add friend ${firstName} ${lastName} with Id:${userId}`) }}>
             <PersonAddOutlinedIcon
               color="primary"
-              onClick={() => { console.log(`add friend ${firstName} ${lastName} with Id:${userId}`) }}
               sx={{ '&:hover': { cursor: 'pointer' } }}>
             </PersonAddOutlinedIcon>
           </IconButton>
-          <IconButton>
+          <IconButton onClick={() => { console.log(`remove friend ${firstName} ${lastName} with Id:${userId}`) }}>
             <PersonRemoveOutlinedIcon
               color="primary"
-              onClick={() => { console.log(`remove friend ${firstName} ${lastName} with Id:${userId}`) }}
               sx={{ '&:hover': { cursor: 'pointer' } }}>
             </PersonRemoveOutlinedIcon>
           </IconButton>

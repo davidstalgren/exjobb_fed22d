@@ -82,7 +82,7 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
             {showComments ? (
               <ChatOutlinedIcon sx={{ color: theme.palette.primary.dark }}></ChatOutlinedIcon>
             ) : (
-              <ChatBubbleOutlineOutlinedIcon sx={{ color: theme.palette.primary.dark }}></ChatBubbleOutlineOutlinedIcon>
+              <ChatBubbleOutlineOutlinedIcon sx={{ color: theme.palette.primary.main }}></ChatBubbleOutlineOutlinedIcon>
             )}
           </IconButton>
         </BoxSpaced>
@@ -91,7 +91,7 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
         <Box>
           {comments.map((comment, index) =>
             <Box key={index}>
-              <Divider color='primary' flexItem></Divider>
+              <Divider flexItem></Divider>
               <Box margin='0.5rem 0rem 0.5rem 0rem' display='flex' flexDirection='column' justifyContent='flex-start'>
                 <Box display='flex' justifyContent='flex-start' gap='1rem'>
                   <ProfileImage pictureUrl={comment.pictureUrl} size="2rem"></ProfileImage>

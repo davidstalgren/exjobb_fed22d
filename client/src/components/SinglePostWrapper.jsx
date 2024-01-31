@@ -21,10 +21,11 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
   return (
     <StyledWrapper margin='1rem 0rem 1rem 0rem'>
       <BoxSpaced marginBottom='1rem'>
-        <BoxSpaced gap='1rem' onClick={() => navigate(`/profile/${userId}`)} sx={{ '&:hover': { cursor: 'pointer' } }}>
+        <BoxSpaced gap='1rem' onClick={() => {navigate(`/profile/${userId}`)}} sx={{ '&:hover': { cursor: 'pointer' } }}>
           <ProfileImage pictureUrl={userPictureUrl} size="3rem"></ProfileImage>
           <Box>
             <Typography color={theme.palette.primary.dark}>{firstName} {lastName}</Typography>
+            <Typography fontSize='small' color={theme.palette.primary.dark}>{location}</Typography>
           </Box>
         </BoxSpaced>
         <BoxSpaced gap='1rem'>
@@ -44,7 +45,7 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
           </IconButton>
         </BoxSpaced>
       </BoxSpaced>
-      <Typography>
+      <Typography marginBottom='0.5rem'>
         {content}
       </Typography>
       {contentPictureUrl && (
@@ -55,7 +56,7 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
           width='100%'
           borderRadius='0.25rem' />
       )}
-      <BoxSpaced justifyContent='flex-start'>
+      <BoxSpaced marginBottom='0.5rem'>
         <IconButton>
           {haveLiked ? (
             <StarOutlinedIcon
@@ -75,33 +76,36 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
             </StarBorderOutlinedIcon>
           )}
         </IconButton>
-        <IconButton>
-          {showComments ? (
-            <ChatOutlinedIcon
-              sx={{ color: theme.palette.primary.dark }}
-              onClick={() => {
-                setShowComments(!showComments);
-                console.log(`hide comments on postId: ${id}`);
-              }}>
-            </ChatOutlinedIcon>
-          ) : (
-            <ChatBubbleOutlineOutlinedIcon
-              sx={{ color: theme.palette.primary.dark }}
-              onClick={() => {
-                setShowComments(!showComments);
-                console.log(`show comments on postId: ${id}`);
-              }}>
-            </ChatBubbleOutlineOutlinedIcon>
-          )}
-        </IconButton>
+        <BoxSpaced onClick={() => setShowComments(!showComments)} sx={{ '&:hover': { cursor: 'pointer' } }}>
+          <Typography color={theme.palette.primary.dark}>
+            {comments.length} {comments.length === 1 ? 'comment' : 'comments'}
+          </Typography>
+          <IconButton onClick={() => setShowComments(!showComments)}>
+            {showComments ? (
+              <ChatOutlinedIcon sx={{ color: theme.palette.primary.dark }}></ChatOutlinedIcon>
+            ) : (
+              <ChatBubbleOutlineOutlinedIcon sx={{ color: theme.palette.primary.dark }}></ChatBubbleOutlineOutlinedIcon>
+            )}
+          </IconButton>
+        </BoxSpaced>
       </BoxSpaced>
       {showComments && (
         <Box>
-          {comments.map((comment) =>
-            <Box marginBottom='0.5rem' display='flex' justifyContent='flex-start' gap='1rem'>
-              <ProfileImage pictureUrl={comment.pictureUrl} size="2rem"></ProfileImage>
-              <Box>
-                {comment.comment}
+          {comments.map((comment, index) =>
+            <Box key={index}>
+              <Divider color='primary' flexItem></Divider>
+              <Box margin='0.5rem 0rem 0.5rem 0rem' display='flex' flexDirection='column' justifyContent='flex-start'>
+                <Box display='flex' justifyContent='flex-start' gap='1rem'>
+                  <ProfileImage pictureUrl={comment.pictureUrl} size="2rem"></ProfileImage>
+                  <Typography color={theme.palette.primary.dark}>
+                    {comment.firstName} {comment.lastName}
+                  </Typography>
+                </Box>
+                <Box paddingLeft='3rem'>
+                  <Typography>
+                    {comment.comment}
+                  </Typography>
+                </Box>
               </Box>
             </Box>
           )}

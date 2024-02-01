@@ -11,12 +11,31 @@ import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import { useState } from "react";
 import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import { useDispatch, useSelector } from "react-redux";
+import { setPost } from "../store/reducers/reducers";
 
 export function SinglePostWrapper({ id, userId, firstName, lastName, location, userPictureUrl, content, contentPictureUrl, likes, comments }) {
   const theme = useTheme();
   const navigate = useNavigate();
-  const [haveLiked, setHaveLiked] = useState(true);
+  const activeUserId = useSelector((state) => state.user._id);
+  const haveLiked = Boolean(likes[activeUserId]);
+  const haveLikedCount = Object.keys(likes).length;
   const [showComments, setShowComments] = useState(false);
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.token);
+
+  async function likeUnlikePost() {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}/like`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ userId: activeUserId })
+    });
+    const newPostLikeStatus = await response.json();
+    dispatch(setPost({post: newPostLikeStatus}));
+  }
 
   return (
     <StyledWrapper margin='1rem 0rem 1rem 0rem'>
@@ -55,25 +74,18 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
           borderRadius='0.25rem' />
       )}
       <BoxSpaced marginBottom='0.5rem'>
-        <IconButton>
-          {haveLiked ? (
-            <StarOutlinedIcon
-              sx={{ color: theme.palette.primary.dark }}
-              onClick={() => {
-                setHaveLiked(!haveLiked);
-                console.log(`remove like from postId: ${id}`);
-              }}>
-            </StarOutlinedIcon>
-          ) : (
-            <StarBorderOutlinedIcon
-              sx={{ color: theme.palette.primary.main }}
-              onClick={() => {
-                setHaveLiked(!haveLiked);
-                console.log(`add like to postId: ${id}`);
-              }}>
-            </StarBorderOutlinedIcon>
-          )}
-        </IconButton>
+        <BoxSpaced>
+          <IconButton onClick={likeUnlikePost}>
+            {haveLiked ? (
+              <StarOutlinedIcon sx={{ color: theme.palette.primary.dark }}></StarOutlinedIcon>
+            ) : (
+              <StarBorderOutlinedIcon sx={{ color: theme.palette.primary.main }}></StarBorderOutlinedIcon>
+            )}
+          </IconButton>
+          <Typography color={theme.palette.primary.dark}>
+            {haveLikedCount} likes
+          </Typography>
+        </BoxSpaced>
         <BoxSpaced onClick={() => setShowComments(!showComments)} sx={{ '&:hover': { cursor: 'pointer' } }}>
           <Typography color={theme.palette.primary.dark}>
             {comments.length} {comments.length === 1 ? 'comment' : 'comments'}

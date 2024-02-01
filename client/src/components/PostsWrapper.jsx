@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { SinglePostWrapper } from "./SinglePostWrapper";
 import { useEffect, useState } from "react";
 import { setPosts } from "../store/reducers/reducers";
+import { Box } from "@mui/material";
 
 export function PostsWrapper({profileId, profileView = false}) {
   const dispatch = useDispatch()
@@ -36,8 +37,8 @@ export function PostsWrapper({profileId, profileView = false}) {
   },[])
 
   return (
-    <>
+    <Box display='flex' flexDirection='column-reverse'>
       {posts.map(({_id, userId, firstName, lastName, location, userPictureUrl, content, contentPictureUrl, likes, comments}) => (<SinglePostWrapper key={_id} id={_id} userId={userId} firstName={firstName} lastName={lastName} location={location} userPictureUrl={userPictureUrl} content={content} contentPictureUrl={contentPictureUrl} likes={likes} comments={comments}></SinglePostWrapper>))}
-    </>
+    </Box>
   )
 }

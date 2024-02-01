@@ -39,7 +39,7 @@ export function CreatePostWrapper() {
     });
 
     const newFeed = await createNewPost.json();
-    dispatch(setPosts({newFeed}));
+    dispatch(setPosts({ posts: newFeed }));
     setImage(null);
     setPost('');
   }

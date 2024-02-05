@@ -3,9 +3,6 @@ import { BoxSpaced } from "./styled/StyledBox";
 import { StyledWrapper } from "./styled/StyledWrapper";
 import { Box, useTheme } from "@mui/system";
 import { ProfileImage } from "./ProfileImage";
-import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
-import PersonRemoveOutlinedIcon from '@mui/icons-material/PersonRemoveOutlined';
-import { useNavigate } from "react-router-dom";
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import { useState } from "react";
@@ -14,10 +11,10 @@ import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutline
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../store/reducers/reducers";
 import SendIcon from '@mui/icons-material/Send';
+import { UserPresentation } from "./UserPresentation";
 
 export function SinglePostWrapper({ id, userId, firstName, lastName, location, userPictureUrl, content, contentPictureUrl, likes, comments }) {
   const theme = useTheme();
-  const navigate = useNavigate();
   const activeUserId = useSelector((state) => state.user._id);
   const haveLiked = Boolean(likes[activeUserId]);
   const haveLikedCount = Object.keys(likes).length;
@@ -58,29 +55,7 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
 
   return (
     <StyledWrapper margin='1rem 0rem 1rem 0rem'>
-      <BoxSpaced marginBottom='1rem'>
-        <BoxSpaced gap='1rem' onClick={() => {navigate(`/profile/${userId}`)}} sx={{ '&:hover': { cursor: 'pointer' } }}>
-          <ProfileImage pictureUrl={userPictureUrl} size="3rem"></ProfileImage>
-          <Box>
-            <Typography color={theme.palette.primary.dark}>{firstName} {lastName}</Typography>
-            <Typography fontSize='small' color={theme.palette.primary.dark}>{location}</Typography>
-          </Box>
-        </BoxSpaced>
-        <BoxSpaced gap='1rem'>
-          <IconButton onClick={() => { console.log(`add friend ${firstName} ${lastName} with Id:${userId}`) }}>
-            <PersonAddOutlinedIcon
-              color="primary"
-              sx={{ '&:hover': { cursor: 'pointer' } }}>
-            </PersonAddOutlinedIcon>
-          </IconButton>
-          <IconButton onClick={() => { console.log(`remove friend ${firstName} ${lastName} with Id:${userId}`) }}>
-            <PersonRemoveOutlinedIcon
-              color="primary"
-              sx={{ '&:hover': { cursor: 'pointer' } }}>
-            </PersonRemoveOutlinedIcon>
-          </IconButton>
-        </BoxSpaced>
-      </BoxSpaced>
+      <UserPresentation userId={userId} firstName={firstName} lastName={lastName} location={location} userPictureUrl={userPictureUrl}></UserPresentation>
       <Typography marginBottom='0.5rem'>
         {content}
       </Typography>

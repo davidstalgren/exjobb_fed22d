@@ -10,6 +10,7 @@ export function ProfileImage({ pictureUrl, size ='3.75rem' }) {
         width={size}
         height={size}
         borderRadius='50%' 
+        loading='lazy' 
         sx={{
           objectFit: 'cover'
         }}/>      

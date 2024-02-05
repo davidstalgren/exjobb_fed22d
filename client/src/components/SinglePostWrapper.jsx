@@ -1,4 +1,4 @@
-import { Divider, IconButton, Typography } from "@mui/material";
+import { Divider, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import { BoxSpaced } from "./styled/StyledBox";
 import { StyledWrapper } from "./styled/StyledWrapper";
 import { Box, useTheme } from "@mui/system";
@@ -13,6 +13,7 @@ import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import { useDispatch, useSelector } from "react-redux";
 import { setPost } from "../store/reducers/reducers";
+import SendIcon from '@mui/icons-material/Send';
 
 export function SinglePostWrapper({ id, userId, firstName, lastName, location, userPictureUrl, content, contentPictureUrl, likes, comments }) {
   const theme = useTheme();
@@ -23,6 +24,7 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
   const [showComments, setShowComments] = useState(false);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
+  const [comment, setComment] = useState('');
 
   async function likeUnlikePost() {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}/like`, {
@@ -35,6 +37,23 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
     });
     const newPostLikeStatus = await response.json();
     dispatch(setPost({post: newPostLikeStatus}));
+  }
+
+  async function addComment() {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}/comment/add`, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Token ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ 
+        userId: activeUserId,
+        commentToAdd: comment
+      })
+    });
+    const newPostCommentStatus = await response.json();
+    dispatch(setPost({post: newPostCommentStatus}));
+    setComment('');
   }
 
   return (
@@ -119,6 +138,27 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
               </Box>
             </Box>
           )}
+          <Divider flexItem></Divider>
+          <BoxSpaced marginTop='1rem'>
+            <TextField id="standard-multiline-flexible"
+              label="Add your comment ..."
+              multiline
+              maxRows={4}
+              variant="filled"
+              fullWidth
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={addComment} sx={{ position: "relative", bottom: '0.5rem'}}>
+                      <SendIcon sx={{ color: theme.palette.primary.dark }}></SendIcon>
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+              value={comment} 
+              onChange={(e) => {setComment(e.target.value)}}
+            />
+          </BoxSpaced>
         </Box>
       )}
     </StyledWrapper>

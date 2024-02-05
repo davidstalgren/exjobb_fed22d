@@ -23,7 +23,7 @@ export function HomeView() {
         </Box>
         {isDesktop && 
           <Box flexBasis='25%'>
-            <FriendsListWrapper></FriendsListWrapper>
+            <FriendsListWrapper userId={user._id}></FriendsListWrapper>
           </Box>}
       </Box>
     </Box>

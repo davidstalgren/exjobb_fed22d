@@ -22,7 +22,7 @@ export function UserWrapper() {
           <ProfileImage pictureUrl={user.pictureUrl}></ProfileImage>
           <Box>
             <Typography variant="h4" color={theme.palette.primary.dark}>{user.firstName} {user.lastName}</Typography>
-            <Typography color={theme.palette.neutral.mediumMain}>{user.friends.length} Friends</Typography>
+            <Typography color={theme.palette.neutral.mediumMain}>{user.friends.length} {user.friends.length === 1 ? 'Friend' : 'Friends'}</Typography>
           </Box>
         </BoxSpaced>
         <AccountBoxOutlinedIcon color="primary" fontSize='large' onClick={() => navigate(`/profile/${user._id}`)} sx={{'&:hover': {cursor: 'pointer'}}}></AccountBoxOutlinedIcon>

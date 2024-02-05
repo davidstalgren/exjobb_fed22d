@@ -90,7 +90,8 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
           src={`${process.env.REACT_APP_API_URL}/assets/${contentPictureUrl}`}
           alt='Post image'
           width='100%'
-          borderRadius='0.25rem' />
+          borderRadius='0.25rem' 
+          loading='lazy' />
       )}
       <BoxSpaced marginBottom='0.5rem'>
         <BoxSpaced>

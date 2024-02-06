@@ -20,7 +20,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <BoxSpaced padding={isDesktop ? '1rem 3rem' : '1rem'} backgroundColor={theme.palette.background.alt}>
-      <BoxSpaced gap='1rem'>
+      <BoxSpaced gap='1rem' onClick={() => {navigate('/home')}} sx={{'&:hover': {cursor: 'pointer'}}}>
         {isDesktop ? <Logo width={50} /> : <Logo width={40} />}
         <Typography align="center" variant="h1" color="primary" fontWeight='900' fontSize='clamp(1rem, 1vw + 1rem, 2.5rem)'>
           GreenPatch Network

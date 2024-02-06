@@ -45,7 +45,7 @@ export function CreatePostWrapper() {
   }
 
   return (
-    <StyledWrapper>
+    <StyledWrapper marginBottom='1rem'>
       <BoxSpaced gap='1rem' marginBottom='1rem'>
         {isDesktop ? (<ProfileImage pictureUrl={user.pictureUrl}></ProfileImage>) : (<></>)}
         <TextField id='createPost'

@@ -3,7 +3,7 @@ import { StyledWrapper } from "./styled/StyledWrapper";
 import { BoxSpaced, BoxSpacedColumn } from "./styled/StyledBox";
 import { ProfileImage } from "./ProfileImage";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, Divider, InputBase, Typography, useMediaQuery, useTheme } from "@mui/material";
+import { Button, Divider, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import Dropzone from "react-dropzone";
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
@@ -47,8 +47,18 @@ export function CreatePostWrapper() {
   return (
     <StyledWrapper>
       <BoxSpaced gap='1rem' marginBottom='1rem'>
-        <ProfileImage pictureUrl={user.pictureUrl}></ProfileImage>
-        <InputBase placeholder='Share a post with some of your green knowledge!' value={post} onChange={(e) => {setPost(e.target.value)}} sx={{width: '100%', backgroundColor: theme.palette.neutral.light, borderRadius: '0.25rem', padding: '1.5rem'}}></InputBase>
+        {isDesktop ? (<ProfileImage pictureUrl={user.pictureUrl}></ProfileImage>) : (<></>)}
+        <TextField id='createPost'
+              label={isDesktop ? 'Share a post with your green knowledge!' : 'Share your knowledge!'}
+              multiline
+              minRows={1}
+              maxRows={4}
+              variant="outlined"
+              fullWidth
+              value={post} 
+              onChange={(e) => {setPost(e.target.value)}}
+              sx={{backgroundColor: theme.palette.neutral.light, borderRadius: '0.25rem'}}
+            />
       </BoxSpaced>
       <Box marginBottom='1rem'>
         <Dropzone multiple={false} onDrop={(acceptedFiles) => {

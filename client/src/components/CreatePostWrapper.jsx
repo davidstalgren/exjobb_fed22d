@@ -71,7 +71,7 @@ export function CreatePostWrapper() {
                 <input {...getInputProps()} />
                 {!image ? (
                   <BoxSpaced gap='2rem'>
-                    <Typography>Add an image here, click or drag and drop</Typography>
+                    <Typography color={theme.palette.neutral.main}>{isDesktop ? ('Add an image here, click or drag and drop') : ('Click to add image here')}</Typography>
                     <BoxSpaced gap='1rem'>
                       <Divider orientation="vertical" variant="middle" flexItem aria-hidden="true"/>
                       <BoxSpacedColumn gap='2rem'>

@@ -36,12 +36,12 @@ export function UserWrapper() {
       <Box display='flex' flexDirection='column' padding='1rem'>
         <Box display='flex' alignItems='flex-start' gap='1rem' marginBottom='0.75rem'>
           <LocationOnOutlinedIcon color='primary'></LocationOnOutlinedIcon>
-          <Typography color={theme.palette.neutral.medium}>{user.location}</Typography>
+          <Typography color={theme.palette.neutral.main}>{user.location}</Typography>
         </Box>
         <Box display='flex' alignItems='flex-start' gap='1rem'>
           <DescriptionOutlinedIcon color='primary'></DescriptionOutlinedIcon>
           <Box>
-            <Typography color={theme.palette.neutral.medium}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium, excepturi rerum facere similique eos fugiat?</Typography>
+            <Typography color={theme.palette.neutral.main}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium, excepturi rerum facere similique eos fugiat?</Typography>
             <Typography color={theme.palette.neutral.mediumMain}>See more...</Typography>
           </Box>
         </Box>

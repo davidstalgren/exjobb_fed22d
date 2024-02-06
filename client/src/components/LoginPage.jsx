@@ -9,7 +9,25 @@ export function LoginPage() {
   const isDesktop = useMediaQuery('(min-width: 900px)');
 
   return (
-    <Box>
+    <Box sx={isDesktop ? ({...{
+      backgroundImage: "url('gpn_logo50opacity.png')", 
+      backgroundPosition: 'bottom -23rem right -20rem',
+      backgroundRepeat: `no-repeat`,
+      backgroundSize: '65rem',
+      backgroundClip: 'content-box',
+      backgroundAttachment: 'fixed',
+      height: "100vh",
+      width: "100%",
+    }}) : ({...{
+      backgroundImage: "url('gpn_logo50opacity.png')",
+      backgroundPosition: 'bottom -15rem right -15rem',
+      backgroundRepeat: `no-repeat`,
+      backgroundSize: '40rem',
+      backgroundClip: 'content-box',
+      backgroundAttachment: 'fixed',
+      height: "100vh",
+      width: "100%",
+    }})}>
       <BoxSpaced padding='1rem' backgroundColor={theme.palette.background.alt}>
         {isDesktop ? <Logo width={75} /> : <Logo width={50} />}
           <Typography align="center" variant="h1" color="primary" fontWeight='900' fontSize='clamp(1rem, 2vw + 1rem, 4rem)'>

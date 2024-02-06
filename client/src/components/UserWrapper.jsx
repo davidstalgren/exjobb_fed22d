@@ -1,10 +1,9 @@
-
 import { StyledWrapper } from "./styled/StyledWrapper";
 import { Box, useTheme } from "@mui/system";
 import { useSelector } from "react-redux";
 import { BoxSpaced } from "./styled/StyledBox";
 import { ProfileImage } from "./ProfileImage";
-import { Divider, Typography } from "@mui/material";
+import { Divider, IconButton, Tooltip, Typography, Zoom } from "@mui/material";
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import { useNavigate } from "react-router-dom";
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
@@ -25,7 +24,11 @@ export function UserWrapper() {
             <Typography color={theme.palette.neutral.mediumMain}>{user.friends.length} {user.friends.length === 1 ? 'Friend' : 'Friends'}</Typography>
           </Box>
         </BoxSpaced>
-        <AccountBoxOutlinedIcon color="primary" fontSize='large' onClick={() => navigate(`/profile/${user._id}`)} sx={{'&:hover': {cursor: 'pointer'}}}></AccountBoxOutlinedIcon>
+        <Tooltip title={`Visit ${user.firstName}'s profile`} TransitionComponent={Zoom} enterDelay={750} arrow>
+          <IconButton onClick={() => navigate(`/profile/${user._id}`)}>
+            <AccountBoxOutlinedIcon color="primary" fontSize='large' sx={{'&:hover': {cursor: 'pointer'}}}></AccountBoxOutlinedIcon>
+          </IconButton>
+        </Tooltip>
       </BoxSpaced>
 
       <Divider></Divider>

@@ -9,13 +9,12 @@ import { useNavigate } from "react-router-dom";
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 
-export function UserWrapper() {
-  const user = useSelector((state) => state.user)
+export function UserWrapper({user}) {
   const navigate = useNavigate();
   const theme = useTheme();
   
   return (
-    <StyledWrapper>
+    <StyledWrapper marginBottom='1rem'>
       <BoxSpaced marginBottom='1rem'>
         <BoxSpaced gap='1rem' onClick={() => navigate(`/profile/${user._id}`)} sx={{'&:hover': {cursor: 'pointer'}}}>
           <ProfileImage pictureUrl={user.pictureUrl}></ProfileImage>

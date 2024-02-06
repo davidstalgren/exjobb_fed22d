@@ -24,14 +24,18 @@ app.use(express.json({ limit: '30mb', extended: true }));
 app.use(express.urlencoded({ limit: '30mb', extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
+app.use('/assets', express.static('/assets'));
+// change to line below when running server on localhost for development environment
+// app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 /* -------------------------------
 --------Multer diskstorage--------
 ------------------------------- */
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public/assets');
+    cb(null, '/assets');
+    // change to line below when running server on localhost for development environment
+    // cb(null, 'public/assets');
   },
   filename: function (req, file, cb) {
     cb(null, file.originalname);
@@ -48,12 +52,7 @@ app.post('/register', upload.single('pictureFile'), async (req, res) => {
     const {firstName, lastName, email, password, pictureUrl, location} = req.body;
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
-    /* const friends = [
-      '65a0f73f8e3d4e2b52f0732e',
-      '65a00a09b638a4ba32bd6a6d',
-      '659fd28b456ee57e578f94a1'
-    ] */
-    const newUserToAdd = new User({firstName, lastName, email, "password": hashedPassword, pictureUrl, location, /* friends */});
+    const newUserToAdd = new User({firstName, lastName, email, "password": hashedPassword, pictureUrl, location});
     await newUserToAdd.save();
     console.log(newUserToAdd, `added a new user to DB`);
     res.status(201).json(newUserToAdd);

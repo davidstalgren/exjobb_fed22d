@@ -7,6 +7,8 @@ import PersonRemoveOutlinedIcon from '@mui/icons-material/PersonRemoveOutlined';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setFriends } from "../store/reducers/reducers";
+import Tooltip from '@mui/material/Tooltip';
+import Zoom from '@mui/material/Zoom';
 
 export function UserPresentation({ userId, firstName, lastName, location, userPictureUrl }) {
   const theme = useTheme();
@@ -42,21 +44,23 @@ export function UserPresentation({ userId, firstName, lastName, location, userPi
       </BoxSpaced>
       <BoxSpaced gap='1rem'>
         {!isOwnPost ? (
-          <IconButton 
-            onClick={toggleFriend} 
-            sx={{
-              outline: `1px solid ${theme.palette.primary.light}`, 
-              '&:hover': {
-                cursor: 'pointer', 
-                outline: `2px solid ${theme.palette.primary.dark}`
-              }
-            }}>
-            {friendStatus ? (
-              <PersonRemoveOutlinedIcon color="primary"></PersonRemoveOutlinedIcon>
-            ) : (
-              <PersonAddOutlinedIcon color="primary"></PersonAddOutlinedIcon>
-            )}
-          </IconButton>
+          <Tooltip title={friendStatus ? `Remove ${firstName} as friend` : `Add ${firstName} as friend`} TransitionComponent={Zoom} enterDelay={750} arrow>
+            <IconButton 
+              onClick={toggleFriend} 
+              sx={{
+                outline: `1px solid ${theme.palette.primary.light}`, 
+                '&:hover': {
+                  cursor: 'pointer', 
+                  outline: `2px solid ${theme.palette.primary.dark}`
+                }
+              }}>
+              {friendStatus ? (
+                <PersonRemoveOutlinedIcon color="primary"></PersonRemoveOutlinedIcon>
+              ) : (
+                <PersonAddOutlinedIcon color="primary"></PersonAddOutlinedIcon>
+              )}
+            </IconButton>
+          </Tooltip>
         ) : (
           <></>
         )}

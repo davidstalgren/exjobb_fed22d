@@ -1,10 +1,11 @@
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography, useMediaQuery } from '@mui/material';
 import Dropzone from "react-dropzone";
 import { BoxSpaced, BoxSpacedColumn } from './styled/StyledBox';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 export function RegisterUserForm({values, errors, touched, theme, handleBlur, handleChange, setFieldValue, setImagePreview, imagePreview}) {
+  const isDesktop = useMediaQuery('(min-width: 900px)');
 
   return (
     <>
@@ -21,7 +22,7 @@ export function RegisterUserForm({values, errors, touched, theme, handleBlur, ha
               <input {...getInputProps()} />
               {!values.picture ? (
                 <BoxSpaced gap='2rem'>
-                  <Typography>Add your profile picture here, click or drag and drop</Typography>
+                  <Typography color={theme.palette.neutral.main}>{isDesktop ? ('Add your profile picture here, click or drag and drop') : ('Click to add profile picture')}</Typography>
                   <InsertPhotoIcon color='primary'/>
                 </BoxSpaced>
               ) : (

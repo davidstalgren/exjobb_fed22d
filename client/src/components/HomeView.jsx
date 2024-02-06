@@ -11,13 +11,29 @@ export function HomeView() {
   const user = useSelector((state) => state.user);
   
   return (
-    <Box>
+    <Box sx={isDesktop ? ({...{
+      backgroundImage: "url('gpn_logo10opacity.png')", 
+      backgroundPosition: 'bottom -23rem right -20rem',
+      backgroundRepeat: `no-repeat`,
+      backgroundSize: '65rem',
+      backgroundClip: 'content-box',
+      backgroundAttachment: 'fixed',
+      width: "100%",
+    }}) : ({...{
+      backgroundImage: "url('gpn_logo10opacity.png')",
+      backgroundPosition: 'bottom -15rem right -15rem',
+      backgroundRepeat: `no-repeat`,
+      backgroundSize: '40rem',
+      backgroundClip: 'content-box',
+      backgroundAttachment: 'fixed',
+      width: "100%",
+    }})}>
       <Navbar></Navbar>
       <Box width='100%' padding='2rem' display={isDesktop ? 'flex' : 'block'} gap='0.75rem' justifyContent='space-between'>
         <Box flexBasis={isDesktop ? '25%' : undefined}>
           <UserWrapper></UserWrapper>
         </Box>
-        <Box flexBasis={isDesktop ? '45%' : undefined}>
+        <Box flexBasis={isDesktop ? '45%' : undefined} margin={isDesktop ? undefined : '1rem 0 0 0'}>
           <CreatePostWrapper></CreatePostWrapper>
           <PostsWrapper></PostsWrapper>
         </Box>

@@ -13,7 +13,7 @@ import { setPost } from "../store/reducers/reducers";
 import SendIcon from '@mui/icons-material/Send';
 import { UserPresentation } from "./UserPresentation";
 
-export function SinglePostWrapper({ id, userId, firstName, lastName, location, userPictureUrl, content, contentPictureUrl, likes, comments }) {
+export function SinglePostWrapper({ id, userId, firstName, lastName, location, userPictureUrl, content, contentPictureUrl, likes, comments, profileView = 'false'}) {
   const theme = useTheme();
   const activeUserId = useSelector((state) => state.user._id);
   const haveLiked = Boolean(likes[activeUserId]);
@@ -54,7 +54,7 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
   }
 
   return (
-    <StyledWrapper margin='1rem 0rem 1rem 0rem'>
+    <StyledWrapper margin={profileView ? ('0rem 0rem 2rem 0rem') : ('1rem 0rem 1rem 0rem')}>
       <UserPresentation userId={userId} firstName={firstName} lastName={lastName} location={location} userPictureUrl={userPictureUrl}></UserPresentation>
       <Typography marginBottom='0.5rem'>
         {content}

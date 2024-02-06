@@ -38,7 +38,7 @@ export function PostsWrapper({profileId, profileView = false}) {
 
   return (
     <Box display='flex' flexDirection='column-reverse'>
-      {posts.map(({_id, userId, firstName, lastName, location, userPictureUrl, content, contentPictureUrl, likes, comments}) => (<SinglePostWrapper key={_id} id={_id} userId={userId} firstName={firstName} lastName={lastName} location={location} userPictureUrl={userPictureUrl} content={content} contentPictureUrl={contentPictureUrl} likes={likes} comments={comments}></SinglePostWrapper>))}
+      {posts.map(({_id, userId, firstName, lastName, location, userPictureUrl, content, contentPictureUrl, likes, comments}) => (<SinglePostWrapper key={_id} id={_id} userId={userId} firstName={firstName} lastName={lastName} location={location} userPictureUrl={userPictureUrl} content={content} contentPictureUrl={contentPictureUrl} likes={likes} comments={comments} profileView></SinglePostWrapper>))}
     </Box>
   )
 }

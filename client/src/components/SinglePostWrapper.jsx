@@ -116,7 +116,7 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
           )}
           <Divider flexItem></Divider>
           <BoxSpaced marginTop='1rem'>
-            <TextField id="standard-multiline-flexible"
+            <TextField id='addComment'
               label="Add your comment ..."
               multiline
               maxRows={4}

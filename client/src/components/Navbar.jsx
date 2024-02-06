@@ -46,7 +46,7 @@ export function Navbar() {
         </IconButton>
       )}
       {mobileMenuOpen && !isDesktop && (
-        <Box display='flex' flexDirection='column' justifyContent='flex-start' alignItems='center' gap='1rem' padding='1rem' position='fixed' top='0' right='0' width='200px' height='100%' backgroundColor={theme.palette.primary.light}>
+        <Box display='flex' flexDirection='column' justifyContent='flex-start' alignItems='center' gap='1rem' padding='1rem' position='fixed' top='0' right='0' width='200px' height='100%' zIndex='9999' backgroundColor={theme.palette.primary.light}>
           <BoxSpaced width='100%' paddingLeft='2rem'>
             <ProfileImage pictureUrl={user.pictureUrl} size="3rem"></ProfileImage>
             <IconButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>

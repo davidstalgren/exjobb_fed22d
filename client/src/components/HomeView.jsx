@@ -31,7 +31,7 @@ export function HomeView() {
       <Navbar></Navbar>
       <Box width='100%' padding='2rem' display={isDesktop ? 'flex' : 'block'} gap='0.75rem' justifyContent='space-between'>
         <Box flexBasis={isDesktop ? '25%' : undefined}>
-          <UserWrapper></UserWrapper>
+          <UserWrapper user={user}></UserWrapper>
         </Box>
         <Box flexBasis={isDesktop ? '45%' : undefined} margin={isDesktop ? undefined : '1rem 0 0 0'}>
           <CreatePostWrapper></CreatePostWrapper>

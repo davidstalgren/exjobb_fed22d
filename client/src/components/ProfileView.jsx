@@ -49,7 +49,7 @@ export function ProfileView() {
       <Box width='100%' padding='2rem' display={isDesktop ? 'flex' : 'block'} gap='1.5rem' justifyContent='center'>
         <Box flexBasis={isDesktop ? '25%' : undefined}>
           {userProfileData && <UserWrapper user={userProfileData}></UserWrapper>}
-          {userProfileData && <FriendsListWrapper userId={userProfileData._id}></FriendsListWrapper>}
+          {userProfileData && <FriendsListWrapper user={userProfileData} profileView></FriendsListWrapper>}
         </Box>
         <Box flexBasis={isDesktop ? '60%' : undefined} margin={isDesktop ? undefined : '1rem 0 0 0'}>
           {userProfileData && (activeUser._id === userProfileData._id) && <CreatePostWrapper></CreatePostWrapper>}

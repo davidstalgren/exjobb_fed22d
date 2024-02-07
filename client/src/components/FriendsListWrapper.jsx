@@ -7,14 +7,14 @@ import { useEffect } from "react";
 import { setFriends } from "../store/reducers/reducers";
 import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
 
-export function FriendsListWrapper({userId}) {
+export function FriendsListWrapper({user, profileView = false}) {
   const activeUser = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
 
   useEffect(() => {
     async function getFriendsList() {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${userId}/friends`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/users/${user._id}/friends`, {
         method: 'GET',
         headers: { Authorization: `Token ${token}` },
       });
@@ -23,10 +23,10 @@ export function FriendsListWrapper({userId}) {
     }
     getFriendsList();
   },[])
-
+  
   return (
-    <StyledWrapper>
-      <Typography variant="h5" margin='0 0 1rem 0'>Friends</Typography>
+    <StyledWrapper marginBottom='1rem'>
+      <Typography variant="h5" margin='0 0 1rem 0'>{profileView ? `${user.firstName} ${user.lastName}'s Friends` : 'Your Friends'}</Typography>
       <Box display='flex' flexDirection='column' gap='0.75rem'>
         {activeUser.friends.map((friend, index) => (
           <UserPresentation key={index} userId={friend._id} firstName={friend.firstName} lastName={friend.lastName} location={friend.location} userPictureUrl={friend.pictureUrl}></UserPresentation>

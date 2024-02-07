@@ -1,6 +1,5 @@
 import { StyledWrapper } from "./styled/StyledWrapper";
 import { Box, useTheme } from "@mui/system";
-import { useSelector } from "react-redux";
 import { BoxSpaced } from "./styled/StyledBox";
 import { ProfileImage } from "./ProfileImage";
 import { Divider, IconButton, Tooltip, Typography, Zoom } from "@mui/material";

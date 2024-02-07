@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { SinglePostWrapper } from "./SinglePostWrapper";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { setPosts } from "../store/reducers/reducers";
 import { Box } from "@mui/material";
 

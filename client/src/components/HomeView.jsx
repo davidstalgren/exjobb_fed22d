@@ -12,7 +12,7 @@ export function HomeView() {
   
   return (
     <Box sx={isDesktop ? ({...{
-      backgroundImage: "url('gpn_logo10opacity.png')", 
+      backgroundImage: `url('${process.env.REACT_APP_STATICASSETS_URL}/gpn_logo10opacity.png')`, 
       backgroundPosition: 'bottom -23rem right -20rem',
       backgroundRepeat: `no-repeat`,
       backgroundSize: '65rem',
@@ -20,7 +20,7 @@ export function HomeView() {
       backgroundAttachment: 'fixed',
       width: "100%",
     }}) : ({...{
-      backgroundImage: "url('gpn_logo10opacity.png')",
+      backgroundImage: `url('${process.env.REACT_APP_STATICASSETS_URL}/gpn_logo10opacity.png')`,
       backgroundPosition: 'bottom -15rem right -15rem',
       backgroundRepeat: `no-repeat`,
       backgroundSize: '40rem',

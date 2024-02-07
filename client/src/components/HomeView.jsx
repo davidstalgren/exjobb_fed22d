@@ -35,11 +35,12 @@ export function HomeView() {
         </Box>
         <Box flexBasis={isDesktop ? '45%' : undefined} margin={isDesktop ? undefined : '1rem 0 0 0'}>
           <CreatePostWrapper></CreatePostWrapper>
+          {!isDesktop ? (<FriendsListWrapper user={user}></FriendsListWrapper>) : (<></>)}
           <PostsWrapper></PostsWrapper>
         </Box>
-        {isDesktop && 
+          {isDesktop && 
           <Box flexBasis='25%'>
-            <FriendsListWrapper userId={user._id}></FriendsListWrapper>
+            <FriendsListWrapper user={user}></FriendsListWrapper>
           </Box>}
       </Box>
     </Box>

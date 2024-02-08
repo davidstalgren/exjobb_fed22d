@@ -78,7 +78,7 @@ export function SinglePostWrapper({ id, userId, firstName, lastName, location, u
             )}
           </IconButton>
           <Typography color={theme.palette.primary.dark}>
-            {haveLikedCount} likes
+            {haveLikedCount} {haveLikedCount === 1 ? 'like' : 'likes'}
           </Typography>
         </BoxSpaced>
         <BoxSpaced onClick={() => setShowComments(!showComments)} sx={{ '&:hover': { cursor: 'pointer' } }}>
